@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security;
 using Microsoft.SqlServer.Dac;
 using Microsoft.SqlServer.Dac.Compare;
@@ -25,6 +26,10 @@ namespace dacFXProject
 
         schemaComparison.Options.IgnorePermissions = true;
         schemaComparison.Options.IgnoreRoleMembership = true;
+        schemaComparison.Options.ExcludeObjectTypes = new List<ObjectType>(schemaComparison.Options.ExcludeObjectTypes) { 
+          ObjectType.Users
+        }.ToArray();
+        
         var result = schemaComparison.Compare();
         Console.WriteLine($"Result is equal: {result.IsEqual}, is valid: {result.IsValid}");
     }
